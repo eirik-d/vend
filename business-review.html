@@ -1794,9 +1794,18 @@ new Chart(document.getElementById('rentalSegments'), {
 
 /* ── Editable content: Firebase real-time sync ── */
 const DOC_ID = 'business-review-t1-2026';
+const LAYOUT_VERSION = 2;
 const comments = document.querySelectorAll('.kr-commentary');
 const editPs = document.querySelectorAll('.edit-p');
 const tldrEdits = document.querySelectorAll('.tldr-edit');
+
+// Clear stale subheader data when layout changes (index positions shift)
+db.ref(DOC_ID + '/_layoutVersion').once('value', snap => {
+  if (snap.val() !== LAYOUT_VERSION) {
+    db.ref(DOC_ID + '/subheaders').remove();
+    db.ref(DOC_ID + '/_layoutVersion').set(LAYOUT_VERSION);
+  }
+});
 
 function showSaveBar() {
   document.getElementById('saveBar').classList.add('visible');
