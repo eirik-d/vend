@@ -110,12 +110,10 @@ async function checkPassword() {
 function showContent() {
   const name = document.getElementById("nameSelect").value;
   const fullLabel = document.getElementById("nameSelect").selectedOptions[0].text;
+  const reviewHtml = '<span style="font-size:13px;color:#7A7A7A;">Reviewing as</span> <span style="font-size:13px;font-weight:600;color:#7A2822;">' + fullLabel + '</span><input type="hidden" id="commenterSelect" value="' + name + '">';
   const html = decryptedHtml.replace(
-    '<div class="review-controls">',
-    '<div class="review-controls" style="display:flex !important;"><span style="font-size:13px;font-weight:500;color:#7A2822;">Reviewing as ' + fullLabel + '</span>'
-  ).replace(
-    /<select id="commenterSelect"[\s\S]*?<\/select>/,
-    '<input type="hidden" id="commenterSelect" value="' + name + '">'
+    /<div class="review-controls">[\s\S]*?<\/div>\s*(?=\n\s*<!--)/,
+    '<div class="review-controls" style="display:flex !important;gap:6px;align-items:center;">' + reviewHtml + '</div>'
   );
   document.open();
   document.write(html);
