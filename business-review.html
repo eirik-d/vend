@@ -97,7 +97,7 @@ async function checkPassword(){
   const pw=document.getElementById("pw"),spin=document.getElementById("spin");
   pw.classList.remove("error");spin.style.display="block";
   try{
-    if(!D){const r=await fetch(PAYLOAD_URL);D=await r.json()}
+    if(!D){const r=await fetch(PAYLOAD_URL+'?v='+Date.now(),{cache:'no-store'});D=await r.json()}
     const enc=new TextEncoder(),
       salt=Uint8Array.from(atob(D.s),c=>c.charCodeAt(0)),
       iv=Uint8Array.from(atob(D.i),c=>c.charCodeAt(0)),
