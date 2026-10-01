@@ -120,7 +120,7 @@ function showContent(){
     full=document.getElementById("nameSelect").selectedOptions[0].text;
   firebase.database().ref(DOC_NAMESPACE+'/logins').push({name:name,fullLabel:full,timestamp:Date.now(),time:new Date().toISOString()});
   const
-    rev='<span style="font-size:13px;color:#7A7A7A;">Reviewing as</span> <span style="font-size:13px;font-weight:600;color:#7A2822;">'+full+'</span><input type="hidden" id="commenterSelect" value="'+name+'">',
+    rev='<input type="hidden" id="commenterSelect" value="'+name+'">',
     html=window._html.replace(/<div class="review-controls">[\s\S]*?<\/div>\s*(?=\n\s*<!--)/,'<div class="review-controls" style="display:flex !important;gap:6px;align-items:center;">'+rev+'</div>');
   document.open();document.write(html);document.close();
   setTimeout(()=>{const s=document.getElementById("commenterSelect");if(s){s.value=name;s.dispatchEvent(new Event("change"))}},500);
